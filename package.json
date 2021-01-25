@@ -9,6 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/server.js"
   },
+  "engines":{
+    "node":"v12.18.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AriiMe/BW-LinkedIn-Backend.git"
