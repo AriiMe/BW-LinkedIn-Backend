@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const Post = require("./posts");
 const Profile = require("./profile");
 const Expirience = require("./exp");
+const Comment = require("./comments");
 
 const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
     process.env.PGDATABASE, //DATABASE NAME
@@ -25,6 +26,7 @@ const models = {
     Profile: Profile(sequelize, DataTypes),
     Post: Post(sequelize, DataTypes),
     Expirience: Expirience(sequelize, DataTypes),
+    Comment: Comment(sequelize, DataTypes),
 };
 
 //GOES THROUGH EACH KEY OF THE MODEL OBJECT ABOVE (e.g. Author: Author(sequelize, DataTypes)) AND CREATES TABLE RELATIONS DEPENDING ON CODE INSIDE EACH MODEL

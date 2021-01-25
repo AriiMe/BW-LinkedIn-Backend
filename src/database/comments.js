@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const Post = sequelize.define(
-        "post",
+    const Comment = sequelize.define(
+        "comment",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
 
             imgurl: {
                 type: DataTypes.STRING(500),
-                allowNull: false,
+                allowNull: true,
             },
         },
         { timestamps: true }
     );
-    Post.associate = (models) => {
-        Post.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
-        Post.hasMany(models.Comment)
+    Comment.associate = (models) => {
+        Comment.belongsTo(models.Post)
+        Comment.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
     };
-    return Post;
+    return Comment;
 };
