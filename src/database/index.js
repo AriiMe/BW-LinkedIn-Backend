@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const Post = require("./post");
+const Post = require("./posts");
 const Profile = require("./profile");
 const Expirience = require("./exp");
 
