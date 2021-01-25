@@ -11,12 +11,12 @@ const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
         host: process.env.PGHOST, //HOST NAME
         dialect: "postgres",
         //THIS IS THE LANGUAGE THAT WE ARE USING WITH SEQUELIZE
-        // dialectOptions: {
-        //   ssl: {
-        //     require: true,
-        //     rejectUnauthorized: false,
-        //   },
-        // },
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            },
+        },
     }
 );
 
