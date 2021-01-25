@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Posts = sequelize.define(
+    const Post = sequelize.define(
         "post",
         {
             id: {
@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         { timestamps: true }
     );
-    Posts.associate = (models) => {
-        Posts.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
+    Post.associate = (models) => {
+        Post.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
     };
-    return Posts;
+    return Post;
 };
