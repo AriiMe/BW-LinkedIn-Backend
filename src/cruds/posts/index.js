@@ -1,7 +1,7 @@
 const express = require("express");
 const Posts = require("../../database").Posts;
 const Profiles = require("../../database").Profiles;
-
+const multer = require("multer")
 const cloudinary = require("../../cloudinary")
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
