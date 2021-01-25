@@ -1,6 +1,7 @@
 const express = require("express");
 const Post = require("../../database").Post;
 const Profile = require("../../database").Profile;
+const Comment = require("../../database").Comment;
 const multer = require("multer");
 const cloudinary = require("../../cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
@@ -28,7 +29,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include: [Profile],
+            include: [Profile, Comment],
         }); //.findAll RETURNS ALL OF THE Posts
         res.send(allPosts);
     } catch (error) {
@@ -40,7 +41,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const singlePost = await Post.findByPk(req.params.id, {
-            include: [Profile],
+            include: [Profile, Comment],
         }); //.findByPk RETURNS THE Post WITH THE MATCHING ID
         res.send(singlePost);
     } catch (error) {
