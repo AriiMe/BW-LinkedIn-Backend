@@ -1,6 +1,6 @@
 const express = require("express");
-const Profiles = require("../../database").Profile; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Article MODEL STRAIGHT FROM THIS OBJECT
-const Posts = require("../../database").Posts;
+const Profile = require("../../database").Profile; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Article MODEL STRAIGHT FROM THIS OBJECT
+const Post = require("../../database").Post;
 const Expirience = require("../../database").Expirience;
 const multer = require("multer");
 
@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
     try {
-        const newProfile = await Profiles.create(req.body); //.create IS A SEQUELIZE METHOD DOR MODELS, IT CREATES A NEW ROW IN THE TABLE
+        const newProfile = await Profile.create(req.body); //.create IS A SEQUELIZE METHOD DOR MODELS, IT CREATES A NEW ROW IN THE TABLE
         res.status(201).send(newProfile);
     } catch (error) {
         console.log(error);
@@ -29,8 +29,8 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const allProfiles = await Profiles.findAll({
-            include: [Posts, Expirience],
+        const allProfiles = await Profile.findAll({
+            include: [Post, Expirience],
         }); //.findAll RETURNS ALL OF THE ArticleS. include:[] IS AN ARRAY THAT CONNECTS MODELS WITH THE REQUEST. THIS IS DONE SO AUTHORID CAN GET THE CORRESPONDING AUTHOR OBJECT
         res.send(allProfiles);
     } catch (error) {
@@ -41,8 +41,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const singleProfile = await Profiles.findByPk(req.params.id, {
-            include: [Posts, Expirience],
+        const singleProfile = await Profile.findByPk(req.params.id, {
+            include: [Post, Expirience],
         }); //.findByPk RETURNS THE Article WITH THE MATCHING ID
         res.send(singleProfile);
     } catch (error) {
@@ -53,7 +53,7 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        await Profiles.destroy({ where: { id: req.params.id } }); //.destroy DESTROYS ROWS. CAN DESTROY MULTIPLE BASED ON FILTER. WILL DESTRY ALL WITHOUT A FILTER
+        await Profile.destroy({ where: { id: req.params.id } }); //.destroy DESTROYS ROWS. CAN DESTROY MULTIPLE BASED ON FILTER. WILL DESTRY ALL WITHOUT A FILTER
         res.send("profile destroyed");
     } catch (error) {
         console.log(error);
@@ -63,9 +63,9 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     try {
-        const alteredProfile = await Profiles.update(req.body, {
+        const alteredProfile = await Profile.update(req.body, {
             where: { id: req.params.id },
-            include: [Posts, Expirience],
+            include: [Post, Expirience],
             returning: true,
         });
         res.send(alteredProfile);
@@ -80,7 +80,7 @@ router.post(
     cloudinaryMulter.single("ProfileImage"),
     async (req, res) => {
         try {
-            const alteredProfile = await Profiles.update(
+            const alteredProfile = await Profile.update(
                 { imgurl: req.file.path },
                 {
                     where: { id: req.params.id },
