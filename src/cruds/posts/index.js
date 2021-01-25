@@ -1,5 +1,5 @@
 const express = require("express");
-const Posts = require("../../database").Posts; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Review MODEL STRAIGHT FROM THIS OBJECT
+const Posts = require("../../database").Posts;
 const Profiles = require("../../database").Profiles;
 
 const cloudinary = require("../../cloudinary")
@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
     try {
         const allPosts = await Posts.findAll({
             include: [Profiles],
-        }); //.findAll RETURNS ALL OF THE ReviewS
+        }); //.findAll RETURNS ALL OF THE Posts
         res.send(allPosts);
     } catch (error) {
         console.log(error);
@@ -62,7 +62,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     try {
-        const alteredPost = await Posts.update(req.body, {
+        const alteredPosts = await Posts.update(req.body, {
             where: { id: req.params.id },
             returning: true,
         });
