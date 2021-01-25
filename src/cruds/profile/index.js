@@ -2,19 +2,18 @@ const express = require("express");
 const Profiles = require("../../database").Profile; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Article MODEL STRAIGHT FROM THIS OBJECT
 const Posts = require("../../database").Posts;
 const Expirience = require("../../database").Expirience;
-const multer = require("multer")
+const multer = require("multer");
 
-const cloudinary = require("../../cloudinary")
-const { CloudinaryStorage } = require("multer-storage-cloudinary")
-
+const cloudinary = require("../../cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: "samples"
-    }
-})
-const cloudinaryMulter = multer({ storage: storage })
+        folder: "samples",
+    },
+});
+const cloudinaryMulter = multer({ storage: storage });
 
 const router = express.Router();
 
@@ -24,7 +23,7 @@ router.post("/", async (req, res) => {
         res.status(201).send(newProfile);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -36,7 +35,7 @@ router.get("/", async (req, res) => {
         res.send(allProfiles);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -48,7 +47,7 @@ router.get("/:id", async (req, res) => {
         res.send(singleProfile);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -58,7 +57,7 @@ router.delete("/:id", async (req, res) => {
         res.send("profile destroyed");
     } catch (error) {
         console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -72,21 +71,28 @@ router.put("/:id", async (req, res) => {
         res.send(alteredProfile);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+        res.status(500).send("Something went wrong!");
     }
 });
 
-router.post("/:id/upload", cloudinaryMulter.single("ProfileImage"), async (req, res) => {
-    try {
-        const alteredProfile = await Profiles.update({ imgurl: req.file.path }, {
-            where: { id: req.params.id },
-            returning: true,
-        });
-        res.send(alteredProfile);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Uh oh, something broke :(");
+router.post(
+    "/:id/upload",
+    cloudinaryMulter.single("ProfileImage"),
+    async (req, res) => {
+        try {
+            const alteredProfile = await Profiles.update(
+                { imgurl: req.file.path },
+                {
+                    where: { id: req.params.id },
+                    returning: true,
+                }
+            );
+            res.send(alteredProfile);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send("Something went wrong!");
+        }
     }
-});
+);
 
 module.exports = router;

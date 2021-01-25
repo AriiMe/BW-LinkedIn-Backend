@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const Posts = require("./posts");
+const Post = require("./posts");
 const Profile = require("./profile");
 const Expirience = require("./exp");
 
@@ -11,20 +11,20 @@ const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
         host: process.env.PGHOST, //HOST NAME
         dialect: "postgres",
         //THIS IS THE LANGUAGE THAT WE ARE USING WITH SEQUELIZE
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false
-            }
-        }
+        // dialectOptions: {
+        //   ssl: {
+        //     require: true,
+        //     rejectUnauthorized: false,
+        //   },
+        // },
     }
 );
 
 const models = {
     //OBJECT CONTAINING MODELS OF THE TABLES
-    Posts: Posts(sequelize, DataTypes),
-    Expirience: Expirience(sequelize, DataTypes),
     Profile: Profile(sequelize, DataTypes),
+    Post: Post(sequelize, DataTypes),
+    Expirience: Expirience(sequelize, DataTypes),
 };
 
 //GOES THROUGH EACH KEY OF THE MODEL OBJECT ABOVE (e.g. Author: Author(sequelize, DataTypes)) AND CREATES TABLE RELATIONS DEPENDING ON CODE INSIDE EACH MODEL
@@ -37,6 +37,7 @@ Object.keys(models).forEach((modelName) => {
 
 models.sequelize = sequelize; //PUTS TABLE MODELS INTO SEQUELIZE
 models.Sequelize = Sequelize; //IDK WHAT THIS DOES :(
+
 
 sequelize
     .authenticate() //TESTS IF SEQUELIZE IS CONNECTED TO OUR DATABASE
