@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Profile = sequelize.define(
-        "product",
+        "profile",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -45,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
         { timestamps: true }
     );
     Profile.associate = (models) => {
-        Profile.hasMany(models.Posts); //ONE-TO-MANY: Product IS ONE, REVIEW IS MANY
-        Profile.belongsTo(models.EXPIER) //belongs to a single category
+        Profile.hasMany(models.Posts); //ONE-TO-MANY: Profile IS ONE, posts IS MANY
+        Profile.belongsTo(models.EXPIER) //belongs to a single Profile
     };
     return Profile;
 };
