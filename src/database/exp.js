@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const EXPIER = sequelize.define(
+    const Expirience = sequelize.define(
         "exp",
         {
             id: {
@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         { timestamps: true }
     );
-    EXPIER.associate = (models) => {
-        EXPIER.hasMany(models.Profile); //category belongs to a single product
+    Expirience.associate = (models) => {
+        Expirience.hasMany(models.Profile); //category belongs to a single product
     };
-    return EXPIER;
+    return Expirience;
 };

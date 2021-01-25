@@ -10,7 +10,7 @@ const port = process.env.PORT || 9001;
 server.use(cors());
 server.use(express.json());
 
-server.use("/api", servicesRoute);
+server.use("/api", crudsRoute);
 
 database.sequelize.sync({ force: false }).then((result) => {
     server.listen(port, () => {

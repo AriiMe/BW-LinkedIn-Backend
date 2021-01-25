@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const Posts = require("./posts");
 const Profile = require("./profile");
-const EXPIER = require("./exp");
+const Expirience = require("./exp");
 
 const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
     process.env.PGDATABASE, //DATABASE NAME
@@ -16,7 +16,7 @@ const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
 const models = {
     //OBJECT CONTAINING MODELS OF THE TABLES
     Posts: Posts(sequelize, DataTypes),
-    EXPIER: EXPIER(sequelize, DataTypes),
+    Expirience: Expirience(sequelize, DataTypes),
     Profile: Profile(sequelize, DataTypes),
 };
 

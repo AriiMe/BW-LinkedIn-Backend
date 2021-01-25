@@ -1,7 +1,7 @@
 const express = require("express");
 const Profiles = require("../../database").Profile; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Article MODEL STRAIGHT FROM THIS OBJECT
 const Posts = require("../../database").Posts;
-const Expier = require("../../database").EXPIER;
+const Expirience = require("../../database").Expirience;
 const multer = require("multer")
 
 const cloudinary = require("../../cloudinary")
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const allProfiles = await Profiles.findAll({
-            include: [Posts, Expier],
+            include: [Posts, Expirience],
         }); //.findAll RETURNS ALL OF THE ArticleS. include:[] IS AN ARRAY THAT CONNECTS MODELS WITH THE REQUEST. THIS IS DONE SO AUTHORID CAN GET THE CORRESPONDING AUTHOR OBJECT
         res.send(allProfiles);
     } catch (error) {
@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const singleProfile = await Profiles.findByPk(req.params.id, {
-            include: [Posts, Expier],
+            include: [Posts, Expirience],
         }); //.findByPk RETURNS THE Article WITH THE MATCHING ID
         res.send(singleProfile);
     } catch (error) {
@@ -66,7 +66,7 @@ router.put("/:id", async (req, res) => {
     try {
         const alteredProfile = await Profiles.update(req.body, {
             where: { id: req.params.id },
-            include: [Posts, Expier],
+            include: [Posts, Expirience],
             returning: true,
         });
         res.send(alteredProfile);
