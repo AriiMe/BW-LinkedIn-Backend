@@ -63,7 +63,7 @@ router.put("/:id", async (req, res) => {
 //CSV
 
 router.get("/:profileId/:expId/downloadcsv", async (req, res) => {
-    const experience = await Experience.find({
+    const experience = await Expirience.findAll({
         profileId: req.params.profileId,
     });
     const fields = [
@@ -80,7 +80,7 @@ router.get("/:profileId/:expId/downloadcsv", async (req, res) => {
     const csvString = json2csv(experience, data);
     res.setHeader(
         "Content-disposition",
-        "attachment; filename=shifts-report.csv"
+        "attachment; filename=mfikncsvworksyeet.csv"
     );
     res.set("Content-Type", "text/csv");
     res.status(200).send(csvString);
