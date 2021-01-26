@@ -7,17 +7,13 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            elementId: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            }
-
+        
         },
         { timestamps: true }
     );
     Like.associate = (models) => {
-        Like.belongsTo(models.Post, { foreignKey: "elementId" })
-        Like.belongsTo(models.Comment, { foreignKey: "elemntId" })
+        Like.belongsTo(models.Post)
+       
         Like.belongsTo(models.Profile)
     };
     return Like;
