@@ -12,7 +12,7 @@ server.use(express.json());
 
 server.use("/api", crudsRoute);
 
-database.sequelize.sync({ force: false }).then((result) => {
+database.sequelize.sync({ force: true }).then((result) => {
     server.listen(port, () => {
         console.log("Server is running on: " + port);
     });
