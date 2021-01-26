@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         Profile.hasMany(models.Post); //ONE-TO-MANY: Profile IS ONE, posts IS MANY
         Profile.hasMany(models.Expirience); //belongs to a single Profile
         Profile.hasMany(models.Comment)
+        Profile.hasMany(models.Like)
     };
     return Profile;
 };

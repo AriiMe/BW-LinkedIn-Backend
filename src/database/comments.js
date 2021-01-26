@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     Comment.associate = (models) => {
         Comment.belongsTo(models.Post)
         Comment.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
+        Comment.hasMany(models.Like, { foreignKey: "elemntId" })
     };
     return Comment;
 };

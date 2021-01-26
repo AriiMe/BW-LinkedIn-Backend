@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
             imgurl: {
                 type: DataTypes.STRING(500),
-                allowNull: false,
+                allowNull: true,
             },
         },
         { timestamps: true }
@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     Post.associate = (models) => {
         Post.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
         Post.hasMany(models.Comment)
+        Post.hasMany(models.Like, { foreignKey: "elemntId" })
     };
     return Post;
 };

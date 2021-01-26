@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
+
         const singlePost = await Post.findByPk(req.params.id, {
             include: [Profile, Comment],
         }); //.findByPk RETURNS THE Post WITH THE MATCHING ID
