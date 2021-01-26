@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         { timestamps: true }
     );
     Expirience.associate = (models) => {
-        Expirience.belongsTo(models.Profile); //category belongs to a single product
+        Expirience.belongsTo(models.Profile); //category belongs to a single profile
     };
     return Expirience;
 };

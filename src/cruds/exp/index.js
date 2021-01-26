@@ -15,7 +15,9 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const allExpiriences = await Expirience.findAll();
+        const allExpiriences = await Expirience.findAll({
+            include: [Profile],
+        });
         res.send(allExpiriences);
     } catch (error) {
         console.log(error);

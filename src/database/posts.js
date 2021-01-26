@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         { timestamps: true }
     );
     Post.associate = (models) => {
-        Post.belongsTo(models.Profile); //ONE-TO-MANY: REVIEW IS MANY, ARTICLE IS ONE
+        Post.belongsTo(models.Profile); 
         Post.hasMany(models.Comment)
         Post.hasMany(models.Like)
     };
