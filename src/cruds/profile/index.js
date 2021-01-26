@@ -2,6 +2,7 @@ const express = require("express");
 const Profile = require("../../database").Profile; //BECAUSE DATABASE/INDEX.JS IS EXPORTING A MODELS OBJECT, WE CAN CALL THE Article MODEL STRAIGHT FROM THIS OBJECT
 const Post = require("../../database").Post;
 const Expirience = require("../../database").Expirience;
+const Comment = require("../../database").Comment;
 const multer = require("multer");
 
 const cloudinary = require("../../cloudinary");
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const allProfiles = await Profile.findAll({
-            include: [Post, Expirience],
+            include: [Post, Expirience, Comment],
         }); //.findAll RETURNS ALL OF THE ArticleS. include:[] IS AN ARRAY THAT CONNECTS MODELS WITH THE REQUEST. THIS IS DONE SO AUTHORID CAN GET THE CORRESPONDING AUTHOR OBJECT
         res.send(allProfiles);
     } catch (error) {
@@ -42,7 +43,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const singleProfile = await Profile.findByPk(req.params.id, {
-            include: [Post, Expirience],
+            include: [Post, Expirience, Comment],
         }); //.findByPk RETURNS THE Article WITH THE MATCHING ID
         res.send(singleProfile);
     } catch (error) {

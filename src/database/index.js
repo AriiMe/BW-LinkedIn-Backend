@@ -4,6 +4,7 @@ const Profile = require("./profile");
 const Expirience = require("./exp");
 const Comment = require("./comments");
 const Like = require("./likes");
+const CommentLike = require("./commentlikes")
 
 const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
     process.env.PGDATABASE, //DATABASE NAME
@@ -13,12 +14,12 @@ const sequelize = new Sequelize( //AUTHORIIZES AND STARTS SEQUELIZE
         host: process.env.PGHOST, //HOST NAME
         dialect: "postgres",
         //THIS IS THE LANGUAGE THAT WE ARE USING WITH SEQUELIZE
-        // dialectOptions: {
-        //     ssl: {
-        //         require: true,
-        //         rejectUnauthorized: false,
-        //     },
-        // },
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            },
+        },
     }
 );
 
@@ -29,6 +30,7 @@ const models = {
     Expirience: Expirience(sequelize, DataTypes),
     Comment: Comment(sequelize, DataTypes),
     Like: Like(sequelize, DataTypes),
+    CommentLike: CommentLike(sequelize, DataTypes),
 };
 
 //GOES THROUGH EACH KEY OF THE MODEL OBJECT ABOVE (e.g. Author: Author(sequelize, DataTypes)) AND CREATES TABLE RELATIONS DEPENDING ON CODE INSIDE EACH MODEL
