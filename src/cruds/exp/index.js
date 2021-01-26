@@ -1,5 +1,6 @@
 const express = require("express");
 const Expirience = require("../../database").Expirience;
+const json2csv = require("json2csv").parse;
 
 const router = express.Router();
 
@@ -57,5 +58,31 @@ router.put("/:id", async (req, res) => {
         res.status(500).send("Something went wrong!");
     }
 });
+
+//CSV
+
+router.get("/:profileId/:id/downloadcsv", async (req, res) => {
+    const experience = await ExperienceModel.find({
+        profileId: req.params.profileId,
+    });
+    const fields = [
+        "id",
+        "role",
+        "company",
+        "startdate",
+        "enddate",
+        "description",
+        "area",
+        "imgurl",
+    ];
+    const data = { fields };
+    const csvString = json2csv(experience, data);
+    res.setHeader(
+        "Content-disposition",
+        "attachment; filename=shifts-report.csv"
+    );
+    res.set("Content-Type", "text/csv");
+    res.status(200).send(csvString);
+})
 
 module.exports = router;
