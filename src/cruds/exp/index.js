@@ -62,7 +62,7 @@ router.put("/:id", async (req, res) => {
 
 //CSV
 
-router.get("/:profileId/:id/downloadcsv", async (req, res) => {
+router.get("/:profileId/:expId/downloadcsv", async (req, res) => {
     const experience = await Experience.find({
         profileId: req.params.profileId,
     });
