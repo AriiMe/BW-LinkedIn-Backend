@@ -1,5 +1,5 @@
 {
-  "name": "BW-LinkedIn-Backend",
+  "name": "bw-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -33,6 +33,7 @@
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "json2csv": "^5.0.5",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
     "pg": "^8.5.1",
