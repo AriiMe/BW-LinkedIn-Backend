@@ -154,11 +154,11 @@ router.get("/:id/profilePDF", async (req, res, next) => {
             let LineHeight = exLineHeight;
             for (let i = 0; i < jForLenght; i++) {
                 textInRowFirstExperiences(doc, "Role:", LineHeight); //345
-                textInRowFirstExperiences(doc, "Company", LineHeight + 20); //365
-                textInRowFirstExperiences(doc, "Start Date", LineHeight + 40); // 385
-                textInRowFirstExperiences(doc, "End Date", LineHeight + 60); // 405
-                textInRowFirstExperiences(doc, "Description", LineHeight + 80); // 425
-                textInRowFirstExperiences(doc, "Area", LineHeight + 100); // 445
+                textInRowFirstExperiences(doc, "Company:", LineHeight + 20); //365
+                textInRowFirstExperiences(doc, "Start Date:", LineHeight + 40); // 385
+                textInRowFirstExperiences(doc, "End Date:", LineHeight + 60); // 405
+                textInRowFirstExperiences(doc, "Description:", LineHeight + 80); // 425
+                textInRowFirstExperiences(doc, "Area:", LineHeight + 100); // 445
 
                 textInRowSecondExperiences(doc, experience[i].role, LineHeight); //345
                 textInRowSecondExperiences(
