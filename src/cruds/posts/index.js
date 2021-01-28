@@ -79,12 +79,9 @@ router.post(
     cloudinaryMulter.single("PostImage"),
     async (req, res) => {
         try {
-            const alteredPost = await Post.update(
+            const alteredPost = await Post.create(
                 { ...req.body, imgurl: req.file.path },
-                {
-                    where: { id: req.params.id },
-                    returning: true,
-                }
+
             );
             res.send(alteredPost);
         } catch (error) {
