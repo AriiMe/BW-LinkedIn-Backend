@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   // Filter user from the profile array by username and password
-  const profile = Profile.findOne({
+  const profile = await Profile.findOne({
     where: { username: username, password: password }, raw: true
   });
   console.log('profile', profile)
