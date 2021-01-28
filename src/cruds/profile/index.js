@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
   const profile = Profile.findOne({
     where: { username: username, password: password }, raw: true
   });
-
+  console.log('profile', profile)
   if (profile) {
     // Generate an access token
     console.log('login', profile.id)
