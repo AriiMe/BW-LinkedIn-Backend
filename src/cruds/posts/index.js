@@ -53,8 +53,14 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        await Post.destroy({ where: { id: req.params.id } }); //.destroy DESTROYS ROWS. CAN DESTROY MULTIPLE BASED ON FILTER. WILL DESTRY ALL WITHOUT A FILTER
-        res.send("post destroyed");
+        const postToDelete = await Post.findByPk(req.params.id)
+        if (postToDelete.profileId === req.profile.id) {
+            await Post.destroy({ where: { id: req.params.id } }); //.destroy DESTROYS ROWS. CAN DESTROY MULTIPLE BASED ON FILTER. WILL DESTRY ALL WITHOUT A FILTER
+            res.send("post destroyed");
+        } else {
+            res.status(401).send('unauthorized')
+        }
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Something went bad!");
@@ -63,11 +69,18 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     try {
-        const alteredPosts = await Post.update(req.body, {
-            where: { id: req.params.id },
-            returning: true,
-        });
-        res.send(alteredPosts);
+        const postToDelete = await Post.findByPk(req.params.id)
+        if (postToDelete.profileId === req.profile.id) {
+            const alteredPosts = await Post.update(req.body, {
+                where: { id: req.params.id },
+                returning: true,
+            });
+            res.send(alteredPosts);
+        }
+        else {
+            res.status(401).send('unauthorized')
+        }
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Something went bad!");
@@ -80,7 +93,7 @@ router.post(
     async (req, res) => {
         try {
             const alteredPost = await Post.create(
-                { ...req.body, profileId: req.params.id, imgurl: req.file.path },
+                { ...req.body, profileId: req.profile.id, imgurl: req.file.path },
 
             );
             res.send(alteredPost);

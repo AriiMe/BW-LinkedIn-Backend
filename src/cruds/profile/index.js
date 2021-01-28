@@ -114,23 +114,23 @@ router.put("/:id", authenticate, async (req, res) => {
   }
 });
 
-router.post(
+
+router.put(
   "/:id/upload",
-  authenticate,
   cloudinaryMulter.single("ProfileImage"),
   async (req, res) => {
     try {
-      const alteredProfile = await Profile.update(
-        { imgurl: req.file.path },
+      const alteredPost = await Profile.update(
+        { ...req.body, imgurl: req.file.path },
         {
           where: { id: req.params.id },
           returning: true,
         }
       );
-      res.send(alteredProfile);
+      res.send(alteredPost);
     } catch (error) {
       console.log(error);
-      res.status(500).send("Something went wrong!");
+      res.status(500).send("Something went bad!");
     }
   }
 );
