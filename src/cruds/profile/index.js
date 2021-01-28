@@ -71,6 +71,7 @@ router.get("/", authenticate, async (req, res) => {
 router.get("/:id", authenticate, async (req, res) => {
   try {
     if (req.params.id === "me") {
+      console.log(req.profile)
       res.send(req.profile);
     } else {
       const singleProfile = await Profile.findByPk(req.params.id, {

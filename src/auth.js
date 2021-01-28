@@ -10,8 +10,9 @@ const authenticate = async (req, res, next) => {
       if (err) {
         res.sendStatus(403);
       }
+      console.log('user', user)
       const profile = await Profile.findByPk(user.id);
-
+      console.log(profile)
       req.profile = profile;
       next();
     });
