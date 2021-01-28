@@ -33,6 +33,7 @@ router.post("/login", async (req, res) => {
 
   if (profile) {
     // Generate an access token
+    console.log('login', profile.id)
     const accessToken = jwt.sign(
       { id: profile.id },
       process.env.ACCESS_TOKEN_SECRET
