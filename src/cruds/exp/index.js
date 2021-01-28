@@ -2,22 +2,27 @@ const express = require("express");
 const Expirience = require("../../database").Expirience;
 const Profile = require("../../database").Profile
 const json2csv = require("json2csv").parse;
+const multer = require("multer");
+const cloudinary = require("../../cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "samples",
+    },
+});
+const cloudinaryMulter = multer({ storage: storage });
+
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-    try {
-        const newExpirience = await Expirience.create(req.body);
-        res.status(201).send(newExpirience);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Something went wrong!");
-    }
-});
 
-router.get("/", async (req, res) => {
+router.get("/:profileId/exp", async (req, res) => {
     try {
+
         const allExpiriences = await Expirience.findAll({
+            where: { profileId: req.params.profileId },
             include: [Profile],
         });
         res.send(allExpiriences);
@@ -39,26 +44,68 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        await Expirience.destroy({ where: { id: req.params.id } });
-        res.send("Expirience destroyed");
+        if (req.profile.id === req.params.id) {
+            await Expirience.destroy({ where: { id: req.params.id } });
+            res.send("Expirience destroyed");
+        } else {
+            res.status(401).send('unauthorized')
+        }
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Something went wrong!");
     }
 });
 
-router.put("/:id", async (req, res) => {
-    try {
-        const alteredExpirience = await Expirience.update(req.body, {
-            where: { id: req.params.id },
-            returning: true,
-        });
-        res.send(alteredExpirience);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Something went wrong!");
+router.put(
+    "/:id",
+    cloudinaryMulter.single("ExpImage"),
+    async (req, res) => {
+        try {
+            if (req.profile.id === req.params.id) {
+                const alteredExp = await Expirience.update(
+
+                    { ...req.body, profileId: req.profile.id, imgurl: req.file.path },
+                    {
+                        where: { id: req.params.id },
+                        returning: true,
+                    }
+
+                );
+                res.send(alteredExp);
+            } else {
+                res.status(401).send('unauthorized')
+            }
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).send("Something went bad!");
+        }
     }
-});
+);
+
+
+router.post(
+    "/:profileId",
+    cloudinaryMulter.single("ExpImage"),
+    async (req, res) => {
+        try {
+            if (req.profile.id === req.params.profileId) {
+                const alteredExp = await Expirience.create(
+                    { ...req.body, profileId: req.profile.id, imgurl: req.file.path },
+
+                );
+                res.send(alteredExp);
+            } else {
+                res.status(401).send('unauthorized')
+            }
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).send("Something went bad!");
+        }
+    }
+);
 
 //CSV
 
