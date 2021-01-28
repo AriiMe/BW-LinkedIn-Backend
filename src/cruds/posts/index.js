@@ -86,7 +86,7 @@ router.post(
                     returning: true,
                 }
             );
-            res.send(alteredProst);
+            res.send(alteredPost);
         } catch (error) {
             console.log(error);
             res.status(500).send("Something went bad!");
