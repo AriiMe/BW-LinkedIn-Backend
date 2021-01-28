@@ -76,7 +76,7 @@ router.put("/:id", async (req, res) => {
 
 router.post(
     "/:id/upload",
-    cloudinaryMulter.single("ProstImage"),
+    cloudinaryMulter.single("PostImage"),
     async (req, res) => {
         try {
             const alteredPost = await Post.update(
