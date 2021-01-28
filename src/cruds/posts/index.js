@@ -2,6 +2,7 @@ const express = require("express");
 const Post = require("../../database").Post;
 const Profile = require("../../database").Profile;
 const Comment = require("../../database").Comment;
+const Like = require("../../database").Like;
 const multer = require("multer");
 const cloudinary = require("../../cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
@@ -29,7 +30,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include: [Profile, Comment],
+            include: [Profile, Comment, Like],
         }); //.findAll RETURNS ALL OF THE Posts
         res.send(allPosts);
     } catch (error) {
