@@ -62,7 +62,7 @@ router.put(
     cloudinaryMulter.single("ExpImage"),
     async (req, res) => {
         try {
-            if (req.profile.id === req.params.id) {
+            if (req.profile.id === req.body.profileId) {
                 const alteredExp = await Expirience.update(
 
                     { ...req.body, profileId: req.profile.id, imgurl: req.file.path },
