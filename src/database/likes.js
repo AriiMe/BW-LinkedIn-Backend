@@ -7,13 +7,13 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
-        
+
         },
         { timestamps: true }
     );
     Like.associate = (models) => {
         Like.belongsTo(models.Post)
-       
+
         Like.belongsTo(models.Profile)
     };
     return Like;
