@@ -80,7 +80,7 @@ router.post(
     async (req, res) => {
         try {
             const alteredPost = await Post.create(
-                { ...req.body, imgurl: req.file.path },
+                { ...req.body, profileId: req.params.id, imgurl: req.file.path },
 
             );
             res.send(alteredPost);
