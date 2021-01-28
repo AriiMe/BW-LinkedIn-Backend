@@ -80,7 +80,7 @@ router.post(
     async (req, res) => {
         try {
             const alteredPost = await Post.update(
-                { imgurl: req.file.path },
+                { ...req.body, imgurl: req.file.path },
                 {
                     where: { id: req.params.id },
                     returning: true,
