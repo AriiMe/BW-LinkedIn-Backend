@@ -92,7 +92,7 @@ router.post(
     async (req, res) => {
         try {
             console.log(req.body)
-            if (req.profile.id === parseInt(req.body.profileId)) {
+            if (req.profile.id === parseInt(req.params.profileId)) {
                 const alteredExp = await Expirience.create(
                     { ...req.body, profileId: req.profile.id, imgurl: req.file.path },
 
